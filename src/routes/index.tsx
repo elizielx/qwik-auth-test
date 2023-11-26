@@ -1,14 +1,21 @@
 import { component$ } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import Login from "../components/login";
+import { useAuthSession } from "./plugin@auth";
 
 export default component$(() => {
+  const session = useAuthSession();
+
   return (
     <>
       <div class="container">
         <h1>Hello, world!</h1>
         <br />
-        <Login />
+        {session.value?.user === undefined ? (
+          <Login />
+        ) : (
+          <a href="/dashboard">Dashboard</a>
+        )}
       </div>
     </>
   );
